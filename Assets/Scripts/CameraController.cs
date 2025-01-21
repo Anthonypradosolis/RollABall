@@ -5,28 +5,39 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject player; // La pelota
-    public float mouseSensitivity = 600f; // Sensibilidad del ratÛn
+    public float mouseSensitivity = 600f; // Sensibilidad del rat√≥n
     public Transform playerBody; // El transform del jugador para rotar el cuerpo
-    
-    private Vector3 offset; // Offset para la c·mara en tercera persona
-    private bool isFirstPerson = false; // Modo actual de la c·mara
-    private float xRotation = 0f; // Control de la rotaciÛn vertical (eje X)
 
-    public float heightOffset = 1.5f;
-    public float shoulderOffset = 0.5f;
-    public float distanceFromPlayer = 2.0f;
+    private Vector3 offset; // Offset para la c√°mara en tercera persona
+    private bool isFirstPerson = false; // Modo actual de la c√°mara
+    private float xRotation = 0f; // Control de la rotaci√≥n vertical (eje X)
+    private float yRotation = 0f; // Control de la rotaci√≥n horizontal (eje Y)
+
+    // Par√°metros para la vista en primera persona
+    public float Sensibilidad = 100f; 
+    public float heightOffset = 1.5f; // Altura de la c√°mara en primera persona
+    public float shoulderOffset = 0.5f; // Desplazamiento lateral para tercera persona
+    public float distanceFromPlayer = 2.0f; // Distancia de la c√°mara al jugador en tercera persona
+
+    // Guardamos la posici√≥n inicial de la c√°mara en tercera persona
+    private Vector3 thirdPersonStartPosition; 
+    private Quaternion thirdPersonStartRotation; 
 
     // Start is called before the first frame update
     void Start()
     {
-        // Calculamos el offset inicial para la c·mara en tercera persona
+        // Calculamos el offset inicial para la c√°mara en tercera persona
         offset = transform.position - player.transform.position;
+
+        // Guardar la posici√≥n y rotaci√≥n iniciales de tercera persona
+        thirdPersonStartPosition = transform.position;
+        thirdPersonStartRotation = transform.rotation;
 
         // Bloqueamos el cursor para el modo en primera persona
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update se usa para alternar entre modos de c·mara
+    // Update se usa para alternar entre modos de c√°mara
     void Update()
     {
         // Cambiar al modo en tercera persona
@@ -34,6 +45,10 @@ public class CameraController : MonoBehaviour
         {
             isFirstPerson = false;
             Cursor.lockState = CursorLockMode.None; // Mostrar el cursor
+
+            // Restablecer la posici√≥n y rotaci√≥n inicial de la c√°mara para tercera persona
+            transform.position = thirdPersonStartPosition;
+            transform.rotation = thirdPersonStartRotation;
         }
 
         // Cambiar al modo en primera persona
@@ -43,7 +58,7 @@ public class CameraController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked; // Bloquear el cursor
         }
 
-        // LÛgica del modo de c·mara
+        // L√≥gica del modo de c√°mara
         if (isFirstPerson)
         {
             FirstPersonView();
@@ -54,43 +69,37 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    // MÈtodo para la vista en tercera persona
+    // M√©todo para la vista en tercera persona
     void ThirdPersonView()
     {
-        transform.position = player.transform.position + offset;
+        // Calculamos la nueva posici√≥n de la c√°mara en tercera persona
+        Vector3 desiredPosition = player.transform.position + offset;
+        transform.position = desiredPosition;
+
+        // La c√°mara siempre mira al jugador
+        transform.LookAt(player.transform); 
     }
 
-    // MÈtodo para la vista en primera persona
+    // M√©todo para la vista en primera persona
     void FirstPersonView()
     {
-        // Entrada del ratÛn
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        // Entrada del rat√≥n para rotaci√≥n
+        float mouseX = Input.GetAxis("Mouse X") * Sensibilidad * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * Sensibilidad * Time.deltaTime;
 
-        // Debug: Verificar los valores del ratÛn
-        Debug.Log($"MouseX: {mouseX}, MouseY: {mouseY}");
-
-        // RotaciÛn vertical (c·mara)
+        // Rotaci√≥n vertical (c√°mara)
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limitar el ·ngulo de visiÛn vertical
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limitar el √°ngulo de visi√≥n vertical
 
-        // Aplicar rotaciÛn vertical a la c·mara
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        // Aplicar rotaci√≥n vertical a la c√°mara
+        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
 
-        // RotaciÛn horizontal (jugador)
-        playerBody.Rotate(Vector3.up * mouseX);
+        // Rotaci√≥n horizontal (jugador)
+        yRotation += mouseX;
+        playerBody.Rotate(Vector3.up * mouseX); // Rotaci√≥n horizontal del jugador
 
-        // Debug: Confirmar que la rotaciÛn se est· aplicando
-        Debug.Log($"Player Rotation Y: {playerBody.rotation.eulerAngles.y}");
-
-        // Ajustar la posiciÛn lateral de la c·mara con base en el movimiento del ratÛn
-        // Desplazamos la c·mara lateralmente seg˙n el movimiento de mouseX
-        shoulderOffset += mouseX * 0.5f; // Puedes ajustar este factor para m·s o menos sensibilidad
-
-        // Ajustar la posiciÛn de la c·mara para seguir el movimiento del jugador, con el desplazamiento lateral
-        Vector3 shoulderPosition = playerBody.position + new Vector3(shoulderOffset, heightOffset, -distanceFromPlayer);
-        transform.position = Vector3.Lerp(transform.position, shoulderPosition, Time.deltaTime * 5f);  // Suavizado
+        // Colocar la c√°mara ligeramente sobre el jugador (simula la vista en primera persona)
+        transform.position = player.transform.position + new Vector3(0, heightOffset, 0);
     }
-
 }
 
