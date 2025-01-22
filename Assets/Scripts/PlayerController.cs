@@ -4,43 +4,44 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Controlador del jugador que maneja el movimiento basado en entradas del usuario.
 public class PlayerController : MonoBehaviour
 {
- // Rigidbody of the player.
- private Rigidbody rb; 
+    // Componente Rigidbody del jugador, utilizado para aplicar física.
+    private Rigidbody rb; 
 
- // Movement along X and Y axes.
- private float movementX;
- private float movementY;
+    // Variables para almacenar el movimiento en los ejes X e Y.
+    private float movementX;
+    private float movementY;
 
- // Speed at which the player moves.
- public float speed = 0; 
+    // Velocidad a la que el jugador se moverá.
+    public float speed = 0; 
 
- // Start is called before the first frame update.
- void Start()
+    // Este método se llama antes de que comience la primera actualización del frame.
+    void Start()
     {
- // Get and store the Rigidbody component attached to the player.
+        // Obtiene y almacena el componente Rigidbody adjunto al jugador.
         rb = GetComponent<Rigidbody>();
     }
  
- // This function is called when a move input is detected.
- void OnMove(InputValue movementValue)
+    // Método que se llama cuando se detecta una entrada de movimiento.
+    void OnMove(InputValue movementValue)
     {
- // Convert the input value into a Vector2 for movement.
+        // Convierte el valor de entrada en un Vector2 para el movimiento.
         Vector2 movementVector = movementValue.Get<Vector2>();
 
- // Store the X and Y components of the movement.
+        // Almacena los componentes X e Y del movimiento.
         movementX = movementVector.x; 
         movementY = movementVector.y; 
     }
 
- // FixedUpdate is called once per fixed frame-rate frame.
- private void FixedUpdate() 
+    // FixedUpdate se llama en intervalos constantes, ideal para cálculos de física.
+    private void FixedUpdate() 
     {
- // Create a 3D movement vector using the X and Y inputs.
-        Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
+        // Crea un vector de movimiento en 3D usando las entradas de X e Y.
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
 
- // Apply force to the Rigidbody to move the player.
+        // Aplica una fuerza al Rigidbody para mover al jugador.
         rb.AddForce(movement * speed); 
     }
 }

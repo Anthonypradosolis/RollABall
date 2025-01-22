@@ -14,14 +14,17 @@ public class CameraController : MonoBehaviour
     private float yRotation = 0f; // Control de la rotación horizontal (eje Y)
 
     // Parámetros para la vista en primera persona
-    public float Sensibilidad = 100f; 
+    public float Sensibilidad = 100f;
     public float heightOffset = 1.5f; // Altura de la cámara en primera persona
     public float shoulderOffset = 0.5f; // Desplazamiento lateral para tercera persona
     public float distanceFromPlayer = 2.0f; // Distancia de la cámara al jugador en tercera persona
+    public float movementSpeed = 5f; // Velocidad de movimiento de la pelota
+
+    private Rigidbody playerRigidbody; // Rigidbody de la pelota
 
     // Guardamos la posición inicial de la cámara en tercera persona
-    private Vector3 thirdPersonStartPosition; 
-    private Quaternion thirdPersonStartRotation; 
+    private Vector3 thirdPersonStartPosition;
+    private Quaternion thirdPersonStartRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,9 @@ public class CameraController : MonoBehaviour
 
         // Bloqueamos el cursor para el modo en primera persona
         Cursor.lockState = CursorLockMode.Locked;
+
+        // Obtener el Rigidbody del jugador
+        playerRigidbody = player.GetComponent<Rigidbody>();
     }
 
     // Update se usa para alternar entre modos de cámara
@@ -77,7 +83,7 @@ public class CameraController : MonoBehaviour
         transform.position = desiredPosition;
 
         // La cámara siempre mira al jugador
-        transform.LookAt(player.transform); 
+        transform.LookAt(player.transform);
     }
 
     // Método para la vista en primera persona
@@ -100,6 +106,34 @@ public class CameraController : MonoBehaviour
 
         // Colocar la cámara ligeramente sobre el jugador (simula la vista en primera persona)
         transform.position = player.transform.position + new Vector3(0, heightOffset, 0);
+
+        // Mover al jugador basado en la cámara
+        HandleFirstPersonMovement();
+    }
+
+    // Método para manejar el movimiento en primera persona
+    private void HandleFirstPersonMovement()
+    {
+        // Obtener entrada de movimiento
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        // Calcular las direcciones hacia adelante y derecha basadas en la rotación de la cámara
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+
+        // Aplanar las direcciones para ignorar la rotación vertical
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+
+        // Calcular la dirección del movimiento
+        Vector3 movementDirection = (forward * moveVertical + right * moveHorizontal).normalized;
+
+        // Aplicar la velocidad directamente al Rigidbody del jugador
+        playerRigidbody.velocity = movementDirection * movementSpeed + new Vector3(0, playerRigidbody.velocity.y, 0);
     }
 }
+
 
