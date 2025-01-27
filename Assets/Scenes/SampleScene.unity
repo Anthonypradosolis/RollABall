@@ -2878,7 +2878,7 @@ GameObject:
   - component: {fileID: 1476809558}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Pelota
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3261,6 +3261,9 @@ GameObject:
   - component: {fileID: 1703772857}
   - component: {fileID: 1703772856}
   - component: {fileID: 1703772855}
+  - component: {fileID: 1703772860}
+  - component: {fileID: 1703772861}
+  - component: {fileID: 1703772862}
   m_Layer: 0
   m_Name: Suelo 1
   m_TagString: Untagged
@@ -3349,12 +3352,72 @@ Transform:
   m_GameObject: {fileID: 1703772854}
   serializedVersion: 2
   m_LocalRotation: {x: -0.18184328, y: -0, z: -0, w: 0.9833275}
-  m_LocalPosition: {x: -0.3, y: 2, z: 23.1}
+  m_LocalPosition: {x: 7.3004236, y: 3.9219174, z: 26.329805}
   m_LocalScale: {x: 1, y: 1, z: 1.2358}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1981764050}
   m_LocalEulerAnglesHint: {x: -20.954, y: 0, z: 0}
+--- !u!54 &1703772860
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703772854}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1703772861
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703772854}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0.00000047683716, z: 0.0000019073486}
+--- !u!114 &1703772862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703772854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec9ebc92fa2d8725b302ea50a64960b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1762945783
 GameObject:
   m_ObjectHideFlags: 0
@@ -3935,6 +3998,38 @@ Transform:
   - {fileID: 2046301929}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1981764049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1981764050}
+  m_Layer: 0
+  m_Name: Rampa Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1981764050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981764049}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.600424, y: -1.9219176, z: -3.2298057}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1703772858}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1992189588
 GameObject:
   m_ObjectHideFlags: 0
@@ -4179,7 +4274,6 @@ SceneRoots:
   - {fileID: 1671990806}
   - {fileID: 1476809556}
   - {fileID: 1008767306}
-  - {fileID: 1703772858}
   - {fileID: 1874614868}
   - {fileID: 520012589}
   - {fileID: 1075174417}
@@ -4199,3 +4293,4 @@ SceneRoots:
   - {fileID: 244931610}
   - {fileID: 557927919}
   - {fileID: 1959542789}
+  - {fileID: 1981764050}
