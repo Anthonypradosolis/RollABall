@@ -17,6 +17,11 @@ public class PlayerController : MonoBehaviour
     // Velocidad a la que el jugador se moverá.
     public float speed = 0; 
 
+    public GameObject Pared_Invisible_0;
+
+    // Cuenta de los pickup
+    private int count;
+
     // Este método se llama antes de que comience la primera actualización del frame.
     void Start()
     {
@@ -50,6 +55,11 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
+
+            count+=1;
+            if(count>=2){
+                Pared_Invisible_0.SetActive(false);
+            }
         }
     }
 }
