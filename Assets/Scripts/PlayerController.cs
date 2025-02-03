@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 // Controlador del jugador que maneja el movimiento basado en entradas del usuario.
 public class PlayerController : MonoBehaviour
@@ -17,6 +18,10 @@ public class PlayerController : MonoBehaviour
     // Velocidad a la que el jugador se moverá.
     public float speed = 0; 
 
+    public GameObject winTextObject;
+
+    public TextMeshProUGUI countText;
+
     public GameObject Pared_Invisible_0;
 
     // Cuenta de los pickup
@@ -27,6 +32,13 @@ public class PlayerController : MonoBehaviour
     {
         // Obtiene y almacena el componente Rigidbody adjunto al jugador.
         rb = GetComponent<Rigidbody>();
+
+        count = 0;
+
+        SetCountText();
+
+        winTextObject.SetActive(false);
+
     }
  
     // Método que se llama cuando se detecta una entrada de movimiento.
@@ -38,6 +50,13 @@ public class PlayerController : MonoBehaviour
         // Almacena los componentes X e Y del movimiento.
         movementX = movementVector.x; 
         movementY = movementVector.y; 
+    }
+
+    void SetCountText(){
+        countText.text = "Count: "+ count.ToString();
+        if(count >=12){
+            winTextObject.SetActive(true);
+        }
     }
 
     // FixedUpdate se llama en intervalos constantes, ideal para cálculos de física.
@@ -61,5 +80,6 @@ public class PlayerController : MonoBehaviour
                 Pared_Invisible_0.SetActive(false);
             }
         }
+        SetCountText();
     }
 }
