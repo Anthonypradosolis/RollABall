@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PickUp
   - Pelota
+  - Enemy
   layers:
   - Default
   - TransparentFX
