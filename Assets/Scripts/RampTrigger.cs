@@ -6,7 +6,7 @@ public class RampTrigger : MonoBehaviour
 {
     // Fuerza a aplicar a la pelota cuando entra en el trigger
     // Sugerencia: Usa [SerializeField] para hacerlo configurable desde el editor de Unity.
-    private Vector3 impulseForce = new Vector3(0, 5, 12);
+    private Vector3 impulseForce = new Vector3(0, 7, 12);
 
     // Indica si la fuerza debe aplicarse en relación al sistema de coordenadas de la rampa
     // Sugerencia: Usa [SerializeField] para mayor flexibilidad.
