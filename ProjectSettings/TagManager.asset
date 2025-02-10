@@ -7,6 +7,8 @@ TagManager:
   - PickUp
   - Pelota
   - Enemy
+  - Jump
+  - Ground
   layers:
   - Default
   - TransparentFX
