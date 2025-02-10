@@ -27,6 +27,12 @@ public class PlayerController : MonoBehaviour
     // Cuenta de los pickup
     private int count;
 
+    private float jumpForce = 4f;
+
+    private bool canJump = false;
+
+    private bool isGrounded = true;
+
     // Este método se llama antes de que comience la primera actualización del frame.
     void Start()
     {
@@ -76,8 +82,16 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
 
             winTextObject.gameObject.SetActive(true);
-            winTextObject.GetComponent<TextMeshProUGUI>().text = "You louse!";
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
         }
+
+        if(collision.gameObject.CompareTag("Ground")){
+            isGrounded = true;
+            canJump = false;
+        }
+
+
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -92,5 +106,29 @@ public class PlayerController : MonoBehaviour
             }
         }
         SetCountText();
+
+        if(other.gameObject.CompareTag("Jump"))
+        {
+            canJump = true;
+            isGrounded = false;
+            other.gameObject.SetActive(false);
+        }
+
+    
+
     }
+
+
+    void Jump(){
+        rb.velocity = new Vector3(rb.velocity.x,0,rb.velocity.y);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    }
+
+    void Update(){
+        if(canJump && Input.GetKeyDown(KeyCode.Space)){
+            Jump();
+            isGrounded = false;
+        }
+    }
+
 }
