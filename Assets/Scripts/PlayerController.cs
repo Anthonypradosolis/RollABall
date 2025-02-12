@@ -42,7 +42,11 @@ public class PlayerController : MonoBehaviour
 
     private Dictionary<GameObject, Vector3> enemyStartPositions = new Dictionary<GameObject, Vector3>();
 
+    private Animator animation;
 
+    private enum PlayerState{Inactivo, Caminando, Saltando, Cayendo, Muerto}
+
+    private PlayerState estadoActual;
 
     // Este método se llama antes de que comience la primera actualización del frame.
     void Start()
@@ -63,6 +67,9 @@ public class PlayerController : MonoBehaviour
         GameObject[] pickupsArray = GameObject.FindGameObjectsWithTag("PickUp");
         allPickups.AddRange(pickupsArray);
 
+        estadoActual = PlayerState.Inactivo;
+        animation = GetComponent<Animator>();
+
         /**
         GameObject[] enemiesArray = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemiesArray)
@@ -77,12 +84,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
-
-
-
-
-
     // Método que se llama cuando se detecta una entrada de movimiento.
     void OnMove(InputValue movementValue)
     {
@@ -92,6 +93,10 @@ public class PlayerController : MonoBehaviour
         // Almacena los componentes X e Y del movimiento.
         movementX = movementVector.x; 
         movementY = movementVector.y; 
+
+        animation.SetBool("Caminando",true);
+        estadoActual = PlayerState.Caminando;
+        UpdateAnimator();
     }
 
     void SetCountText(){
@@ -125,6 +130,8 @@ public class PlayerController : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Ground")){
             isGrounded = true;
+            animation.SetBool("Saltando",true);
+            UpdateAnimator();
         }
     }
 
@@ -159,6 +166,9 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true;
             other.gameObject.SetActive(false);
+            animation.SetBool("Saltando",true);
+            estadoActual = PlayerState.Saltando;
+            UpdateAnimator();
         }
 
     
@@ -170,13 +180,26 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x,0,rb.velocity.y);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
+        animation.SetBool("Saltando",true);
+        estadoActual = PlayerState.Saltando;
+        UpdateAnimator();
+        
     }
 
     void Update(){
         Debug.Log("isGrounded" + isGrounded);
         if(canJump && isGrounded && Input.GetKeyDown(KeyCode.Space)){
             Jump();
+            animation.SetBool("Caminando",true);
+            estadoActual = PlayerState.Caminando;
+            UpdateAnimator();
         }
+        else if(!isGrounded){
+            animation.SetBool("Saltando",false);
+            animation.SetBool("Caminando",true);
+            UpdateAnimator();
+        }
+
     }
 
     void Respawn()
@@ -219,6 +242,13 @@ public class PlayerController : MonoBehaviour
 
 
 
+    }
+
+    void UpdateAnimator(){
+        animation.SetBool("Caminando", estadoActual == PlayerState.Caminando);
+        animation.SetBool("Saltando",estadoActual == PlayerState.Saltando);
+        animation.SetBool("Cayendo",estadoActual == PlayerState.Cayendo);
+        animation.SetBool("Muerto",estadoActual == PlayerState.Muerto);
     }
 
 }

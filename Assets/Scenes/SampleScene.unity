@@ -3604,7 +3604,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.033333335
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 910ecc7f7707151d896c289fb8b2f0a8, type: 2}
   m_BuildHeightMesh: 0
@@ -4661,7 +4661,7 @@ Transform:
   m_GameObject: {fileID: 571602132}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.43, y: 22.000841, z: -27.03}
+  m_LocalPosition: {x: -29.53, y: 22.000841, z: -27.03}
   m_LocalScale: {x: 3, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8072,7 +8072,7 @@ Transform:
   m_GameObject: {fileID: 1052467618}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.43, y: 22.000841, z: -32.38}
+  m_LocalPosition: {x: -29.59, y: 22.000841, z: -37.6}
   m_LocalScale: {x: 3, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9736,7 +9736,7 @@ Transform:
   m_GameObject: {fileID: 1425679887}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.91, y: 22.000841, z: -37.57}
+  m_LocalPosition: {x: -28.91, y: 22.000841, z: -32.34}
   m_LocalScale: {x: 0.5, y: 5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10100,6 +10100,7 @@ GameObject:
   - component: {fileID: 1476809552}
   - component: {fileID: 1476809557}
   - component: {fileID: 1476809558}
+  - component: {fileID: 1476809559}
   m_Layer: 0
   m_Name: Player
   m_TagString: Pelota
@@ -10215,7 +10216,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.61, y: 2.59, z: -21.12}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -10266,6 +10267,27 @@ MonoBehaviour:
   winTextObject: {fileID: 558280443}
   countText: {fileID: 548527559}
   Pared_Invisible_0: {fileID: 2054776549}
+--- !u!95 &1476809559
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476809551}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3e627c999d955042a8cb5d9cdceefb62, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1489620655
 GameObject:
   m_ObjectHideFlags: 0
@@ -13402,7 +13424,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.033333335
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 11f041b4b36ec735ab066ed63f3ee640, type: 2}
   m_BuildHeightMesh: 0
