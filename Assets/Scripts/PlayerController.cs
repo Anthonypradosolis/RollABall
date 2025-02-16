@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator animation;
 
-    private enum PlayerState{Inactivo, Caminando, Saltando, Cayendo, Muerto}
+    private enum PlayerState{Inactivo, Caminando, Saltando, Cayendo, Muerto,BuffSalto}
 
     private PlayerState estadoActual;
 
@@ -130,7 +130,8 @@ public class PlayerController : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Ground")){
             isGrounded = true;
-            animation.SetBool("Saltando",true);
+            animation.SetBool("BuffSalto",false);
+            estadoActual = PlayerState.Inactivo;
             UpdateAnimator();
         }
     }
@@ -145,7 +146,13 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        isGrounded = false;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+            estadoActual = PlayerState.Cayendo;
+            UpdateAnimator();
+
+        }
     }
 
 
@@ -166,9 +173,9 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true;
             other.gameObject.SetActive(false);
-            animation.SetBool("Saltando",true);
-            estadoActual = PlayerState.Saltando;
-            UpdateAnimator();
+            animation.SetBool("BuffSalto",true);
+        //    estadoActual = PlayerState.Saltando;
+        //    UpdateAnimator();
         }
 
     
@@ -180,8 +187,8 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x,0,rb.velocity.y);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
-        animation.SetBool("Saltando",true);
-        estadoActual = PlayerState.Saltando;
+    //    animation.SetBool("BuffSalto",true);
+        estadoActual = PlayerState.BuffSalto;
         UpdateAnimator();
         
     }
@@ -190,15 +197,17 @@ public class PlayerController : MonoBehaviour
         Debug.Log("isGrounded" + isGrounded);
         if(canJump && isGrounded && Input.GetKeyDown(KeyCode.Space)){
             Jump();
-            animation.SetBool("Caminando",true);
-            estadoActual = PlayerState.Caminando;
-            UpdateAnimator();
+            //animation.SetBool("Caminando",true);
+            //estadoActual = PlayerState.Caminando;
+            //UpdateAnimator();
         }
+        /**
         else if(!isGrounded){
-            animation.SetBool("Saltando",false);
+            animation.SetBool("BuffSalto",false);
             animation.SetBool("Caminando",true);
             UpdateAnimator();
         }
+        **/
 
     }
 
@@ -246,7 +255,8 @@ public class PlayerController : MonoBehaviour
 
     void UpdateAnimator(){
         animation.SetBool("Caminando", estadoActual == PlayerState.Caminando);
-        animation.SetBool("Saltando",estadoActual == PlayerState.Saltando);
+        animation.SetBool("BuffSalto",estadoActual == PlayerState.BuffSalto);
+     //   animation.SetBool("BuffSalto", canJump);
         animation.SetBool("Cayendo",estadoActual == PlayerState.Cayendo);
         animation.SetBool("Muerto",estadoActual == PlayerState.Muerto);
     }
