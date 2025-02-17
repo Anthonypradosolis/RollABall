@@ -44,9 +44,11 @@ public class PlayerController : MonoBehaviour
 
     private Animator animation;
 
-    private enum PlayerState{Inactivo, Caminando, Saltando, Cayendo, Muerto,BuffSalto}
+    private enum PlayerState{Inactivo, Caminando, Cayendo, Muerto,BuffSalto}
 
     private PlayerState estadoActual;
+
+    private bool isMoving = false;
 
     // Este método se llama antes de que comience la primera actualización del frame.
     void Start()
@@ -67,8 +69,9 @@ public class PlayerController : MonoBehaviour
         GameObject[] pickupsArray = GameObject.FindGameObjectsWithTag("PickUp");
         allPickups.AddRange(pickupsArray);
 
-        estadoActual = PlayerState.Inactivo;
         animation = GetComponent<Animator>();
+        estadoActual = PlayerState.Inactivo;
+        UpdateAnimator();
 
         /**
         GameObject[] enemiesArray = GameObject.FindGameObjectsWithTag("Enemy");
@@ -93,9 +96,14 @@ public class PlayerController : MonoBehaviour
         // Almacena los componentes X e Y del movimiento.
         movementX = movementVector.x; 
         movementY = movementVector.y; 
+        isMoving = movementX !=0 || movementY !=0;
 
-        animation.SetBool("Caminando",true);
-        estadoActual = PlayerState.Caminando;
+        if(isGrounded && isMoving){
+            estadoActual = PlayerState.Caminando;
+        }
+        else if(!isGrounded){
+            estadoActual = PlayerState.Cayendo;
+        }
         UpdateAnimator();
     }
 
@@ -130,8 +138,9 @@ public class PlayerController : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Ground")){
             isGrounded = true;
-            animation.SetBool("BuffSalto",false);
-            estadoActual = PlayerState.Inactivo;
+        //    animation.SetBool("BuffSalto",false);
+            
+            estadoActual = isMoving ? PlayerState.Caminando : PlayerState.Inactivo;
             UpdateAnimator();
         }
     }
@@ -197,10 +206,20 @@ public class PlayerController : MonoBehaviour
         Debug.Log("isGrounded" + isGrounded);
         if(canJump && isGrounded && Input.GetKeyDown(KeyCode.Space)){
             Jump();
+
             //animation.SetBool("Caminando",true);
             //estadoActual = PlayerState.Caminando;
             //UpdateAnimator();
+        } else if(isGrounded && isMoving){
+                estadoActual = PlayerState.Caminando;
+        } else if(!isGrounded){
+                estadoActual = PlayerState.Cayendo;
+        } else if(!isMoving){
+                estadoActual = PlayerState.Inactivo;
         }
+        UpdateAnimator();
+
+
         /**
         else if(!isGrounded){
             animation.SetBool("BuffSalto",false);
