@@ -232,7 +232,70 @@ El script `Rotator.cs` rota un objeto de forma continua en los ejes X, Y y Z del
 - Se llama una vez por frame y realiza la rotación continua del objeto en los ejes X, Y y Z.
 - La rotación se ajusta según el valor de `Time.deltaTime` para garantizar un movimiento uniforme, sin importar los FPS del juego.
 
-
-
-
 </details>
+<details>
+      <summary><b>USO DE ESTADOS</b></summary>
+
+### **Uso de Estados**
+
+**¿Por qué usar estados?**
+
+En un videojuego, un personaje puede realizar varias acciones: caminar, saltar, caer, atacar, etc. Para gestionar estas acciones de manera eficiente y evitar conflictos entre ellas, se utilizan **estados**.
+
+Ventajas de usar un sistema de estados:
+
+✔ Código más organizado: Separa la lógica de cada acción del personaje.
+
+✔ Evita errores: Controla las transiciones entre estados sin conflictos.
+
+✔ Facilita la depuración: Es más fácil identificar problemas cuando cada acción tiene su propio estado.
+
+✔ Escalabilidad: Permite agregar nuevos estados sin afectar los existentes.
+
+**Uso de Estados en este Proyecto**
+  
+En este juego, el personaje tiene los siguientes estados:
+
+1️⃣ Idle (Quieto)
+👉 Cuando el jugador no se está moviendo ni saltando.
+
+2️⃣ Walking (Caminando)
+👉 Cuando el jugador se mueve con las teclas de dirección.
+👉 Solo se activa si el jugador está en el suelo.
+
+3️⃣ Jumping (Saltando)
+👉 Se activa al presionar la barra espaciadora cuando el jugador está en el suelo.
+👉 Mientras está en el aire por un salto, permanece en este estado.
+
+
+**Como se gestionan los estados en el código**
+El estado del jugador lo manejo con booleanos:
+```bash
+    private bool isGrounded = true;
+    private bool isJumping = false;
+    private bool isMoving = false;
+```
+
+**Transiciones entre Estados**
+Los estados cambian bajo ciertas condiciones:
+
+- Idle → Walking → Cuando el jugador presiona una tecla de movimiento.
+- Walking → Jumping → Cuando el jugador presiona la tecla de salto y está en el suelo.
+- Jumping → Idle → Walking → Cuendo el jugador salta.
+Este cambio se actualiza en el método UpdateAnimator() que sincroniza el estado con las animaciones:
+
+```bash
+void UpdateAnimator()
+{
+        animation.SetBool("Caminando", isMoving && isGrounded);
+        animation.SetBool("BuffSalto", isJumping);
+}
+```
+
+**Animator Controller en Unity**
+
+El Animator Controller es una herramienta en Unity que permite gestionar las animaciones de un personaje mediante un sistema de estados y transiciones. De esta manera se puede observar de manera muy visual los cambios de estados en el juego a medida que avanza.
+
+![Cambio de Estados](Gifs/Estados.gif)      
+
+</details>      
