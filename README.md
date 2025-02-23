@@ -62,13 +62,6 @@ En el script se pueden ajustar los siguientes parámetros:
 
 El script completo está disponible en el archivo `CameraController.cs`.
 
-## Licencia
-
-Este proyecto está disponible bajo la licencia **MIT**. Puedes usar, modificar y distribuir este código libremente, siempre que se incluya una atribución al autor original.
-
----
-¡Gracias por usar este controlador de cámara! 🎮
-
 ## Segundo Script: PlayerController
 
 Este script implementa un controlador de movimiento para un jugador en Unity, utilizando el componente `Rigidbody` para aplicar física en función de las entradas del usuario.
@@ -140,12 +133,6 @@ El movimiento es gestionado mediante el método `AddForce`, lo que garantiza un 
 
 El script completo está disponible en el archivo `PlayerController.cs`.
 
-## Licencia
-
-Este proyecto está disponible bajo la licencia **MIT**. Puedes usar, modificar y distribuir este código libremente, siempre que se incluya una atribución al autor original.
-
----
-¡Gracias por usar este controlador de jugador! 🚀
 
 ## Tercer Script: Mouselook
 
