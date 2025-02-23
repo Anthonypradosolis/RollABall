@@ -8,6 +8,46 @@ A mayores realice un objeto que al objtenerlo consigues la opción de realizar u
 
 <details>
     <summary><b>FUNCIONALIDADES IMPLEMENTADAS</b></summary>
+    
+### **Movimiento del jugador**
+
+El jugador puede moverse mediante las teclas(A,S,D,W). El movimiento se controla aplicando fuerzas físicas, lo que permite un control suave y realista.
+
+### **Control de Cámaras**
+El jugador puede cambiar entre la vista en primera persona y la vista en tercera persona presionando los botones 1 y 2, respectivamente. Esto permite al jugador elegir la perspectiva que prefiera para jugar.
+
+![Cambio de cámara](Gifs/Camaras.gif)
+
+### **Recolección de Pickups**
+El jugador puede recoger objetos etiquetados como "PickUp". Al recoger estos objetos, se incrementa un contador y el objeto se desactiva. El objetivo es recoger todos los pickups para ganar el juego.
+
+### **Pared Invisible**
+El jugador no podrá pasar la primera parte del juego si no recolecta los dos pickups que está por el mapa.
+
+![Pared Invisible](Gifs/ParedInvisible.gif)
+
+### **Boost de la Rampa**
+El jugador puede recibir un impulso al pasar por una rampa especial. 
+
+![Rampa](Gifs/Rampa.gif)
+
+### **Salto del Jugador**
+El jugador al recolectar un pickup especial recibe el buff de saltar con la barra espaciadora.
+
+![Salto](Gifs/Salto.gif)
+
+### **Seguimiento del Enemigo**
+El jugador tiene que escapar de los enemigos.
+
+![Enemigos](Gifs/Enemigos.gif)
+
+### **Muerte del Jugador**
+El jugador al recibir el contacto del enemigo muere y se reinicia el nivel.
+
+![Muerte](Gifs/Muerte.gif)
+
+### **Win**
+El jugador debe de recolectar 12 pickups para ganar, si lo hace aparece un texto en la pantalla diciendo que ganamos.
 
 </details>
 <details>
@@ -323,6 +363,20 @@ El script `Mouselook.cs` maneja la rotación de la cámara en un juego en primer
   La rotación se aplica a la cámara utilizando `transform.localRotation = Quaternion.Euler(xRotacion, 0, 0)` para la vista vertical, y la rotación horizontal se aplica al cuerpo del jugador con `playerBody.Rotate(Vector3.up * mouseX)`.
 
   La implementación es sencilla y eficaz para controlar la vista en primera persona, sin complicaciones adicionales de cálculos complejos.
+
+</details>
+
+<details>
+
+## Conclusión
+
+   <summary><b>CONCLUSIÓN</b></summary>
+
+Con este proyecto, se desarrolló un sistema de rotación continua de un objeto en Unity, implementado a través del script `Rotator.cs`. Este script permite rotar un objeto de manera suave en los tres ejes (X, Y, Z) del espacio, ajustando la rotación por la tasa de frames mediante el uso de `Time.deltaTime`. Esto asegura que la rotación se mantenga constante y uniforme, independientemente de los FPS del juego.
+
+La implementación de este sistema es útil para crear objetos que necesiten una rotación continua en el juego, como elementos decorativos o componentes interactivos, y permite comprender la importancia de ajustar la rotación en función del tiempo transcurrido entre frames.
+
+Este proyecto también proporciona una buena base para entender cómo trabajar con transformaciones y manipulaciones de objetos en Unity de manera eficiente, sin sobrecargar el rendimiento del juego.
 
 </details>
 
