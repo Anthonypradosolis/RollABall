@@ -298,4 +298,31 @@ El Animator Controller es una herramienta en Unity que permite gestionar las ani
 
 ![Cambio de Estados](Gifs/Estados.gif)      
 
-</details>      
+</details>
+
+<details>
+
+   <summary><b>USO DE MOUSELOOK</b></summary>
+
+### **Control de Rotación de la Cámara con el Mouse**
+
+El script `Mouselook.cs` maneja la rotación de la cámara en un juego en primera persona en función del movimiento del mouse, permitiendo a los jugadores mirar alrededor en el entorno del juego.
+
+- **¿Por qué utilizar el mouse para la rotación?**
+  
+  El uso del mouse para controlar la rotación de la cámara proporciona una experiencia más intuitiva y natural para los jugadores, ya que es un dispositivo de entrada comúnmente utilizado en la mayoría de los juegos en primera persona. Al mover el mouse, se simula el giro de la cabeza de la cámara, con la capacidad de rotar libremente en los ejes X (vertical) y Y (horizontal).
+
+  En este script, se utiliza la entrada del mouse para ajustar dos componentes principales de la rotación:
+  1. **Eje X (vertical)**: Controla la inclinación hacia arriba o hacia abajo de la cámara.
+  2. **Eje Y (horizontal)**: Controla la rotación alrededor del cuerpo del jugador (como girar el cuerpo hacia la izquierda o derecha).
+
+- **¿Cómo se implementa?**
+  
+  El movimiento del mouse en los ejes X e Y se captura utilizando `Input.GetAxis()`, ajustado por la sensibilidad y el tiempo entre frames para asegurar una rotación suave y consistente. Además, la rotación vertical (eje X) está limitada a un rango de -90 a 90 grados para evitar que la cámara gire completamente hacia arriba o abajo.
+
+  La rotación se aplica a la cámara utilizando `transform.localRotation = Quaternion.Euler(xRotacion, 0, 0)` para la vista vertical, y la rotación horizontal se aplica al cuerpo del jugador con `playerBody.Rotate(Vector3.up * mouseX)`.
+
+  La implementación es sencilla y eficaz para controlar la vista en primera persona, sin complicaciones adicionales de cálculos complejos.
+
+</details>
+
