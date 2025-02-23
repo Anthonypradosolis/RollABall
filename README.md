@@ -219,9 +219,4 @@ Este script implementa el control de rotación de la cámara en Unity utilizando
 
 El script completo está disponible en el archivo `Mouselook.cs`.
 
-## Licencia
-
-Este proyecto está disponible bajo la licencia **MIT**. Puedes usar, modificar y distribuir este código libremente, siempre que se incluya una atribución al autor original.
-
----
 ¡Gracias por usar este controlador de cámara! 🎮
