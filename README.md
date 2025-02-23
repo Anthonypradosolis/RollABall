@@ -1,4 +1,10 @@
-# RollABall
+# Proyecto PMDM RollABall
+
+## Descripción
+
+Este proyecto es una implementación de un juego de tipo *Roll-a-ball* en Unity, donde se controla a una esfera que puede moverse en un entorno 3D y recoger objetos mientras escapa de enemigos. El juego también incluye dos tipos de cámaras: una en tercera persona y otra en primera persona, que el jugador puede alternar. El objetivo es familiarizarse con el uso de *Rigidbody*, control de entrada del teclado, y manejo de cámaras en Unity.
+
+A mayores realice un objeto que al objtenerlo consigues la opción de realizar un salto, creación de un mapa, una pared invisible, una rampa para inpulsarte y que cuando los enemigos te tocan se reinicia el nivel.
 
 ## Primer Script:  CamaraController
 
