@@ -6,210 +6,233 @@ Este proyecto es una implementación de un juego de tipo *Roll-a-ball* en Unity,
 
 A mayores realice un objeto que al objtenerlo consigues la opción de realizar un salto, creación de un mapa, una pared invisible, una rampa para inpulsarte y que cuando los enemigos te tocan se reinicia el nivel.
 
-## Primer Script:  CamaraController
+<details>
+    <summary><b>FUNCIONALIDADES IMPLEMENTADAS</b></summary>
 
-Este proyecto implementa un controlador de cámara en Unity que permite alternar entre vistas en **primera persona** y **tercera persona**. Proporciona una experiencia inmersiva para juegos en los que el jugador controla un objeto (en este caso, una pelota).
+</details>
+<details>
+      <summary><b>SCRIPTS UTILIZADOS</b></summary>
 
-## Características
 
-- **Vista en tercera persona**:
-  - La cámara sigue al jugador manteniendo una distancia definida.
-  - La cámara enfoca constantemente al jugador desde atrás.
+### `CameraController.cs`
 
-- **Vista en primera persona**:
-  - La cámara se coloca sobre el jugador, simulando su perspectiva.
-  - La rotación de la cámara se controla con el ratón.
-  - Movimiento físico del jugador basado en la orientación de la cámara.
-
-- **Intercambio dinámico de vistas**:
-  - Pulsar `1` cambia a la vista en tercera persona.
-  - Pulsar `2` cambia a la vista en primera persona.
-
-## Requisitos
-
-- **Motor de juego**: Unity 2020.3 o superior.
-- **Componente necesario**: 
-  - Un objeto con un `Rigidbody` (el jugador).
-  - Un objeto de cámara principal asociado al script.
-
-## Cómo funciona
-
-### Variables configurables
-En el script se pueden ajustar los siguientes parámetros:
-- **`mouseSensitivity`**: Controla la sensibilidad del ratón para la rotación en primera persona.
-- **`heightOffset`**: Define la altura de la cámara en relación al jugador en primera persona.
-- **`distanceFromPlayer`**: Determina la distancia de la cámara al jugador en tercera persona.
-- **`movementSpeed`**: Ajusta la velocidad del movimiento del jugador.
-
-### Uso de las teclas
-- **Tecla `1`**: Cambia a la vista en tercera persona.
-- **Tecla `2`**: Cambia a la vista en primera persona.
-
-### Configuración inicial
-- La posición y rotación de la cámara en tercera persona se guardan al inicio.
-- La cámara en primera persona bloquea el cursor para evitar interferencias.
-
-## Cómo usarlo
-
-1. **Añadir el script**:
-   - Asocia el script `CameraController` al objeto de cámara principal.
-
-2. **Asignar referencias**:
-   - Arrastra el objeto jugador al campo `player`.
-   - Configura el `Transform` del jugador en `playerBody`.
-
-3. **Personalizar las configuraciones**:
-   - Ajusta los valores de sensibilidad, distancia, y velocidad según las necesidades del juego.
-
-4. **Ejecutar el juego**:
-   - Usa las teclas `1` y `2` para alternar entre vistas mientras controlas al jugador.
-
-## Código del script
-
-El script completo está disponible en el archivo `CameraController.cs`.
-
-## Segundo Script: PlayerController
-
-Este script implementa un controlador de movimiento para un jugador en Unity, utilizando el componente `Rigidbody` para aplicar física en función de las entradas del usuario.
-
-## Características
-
-- **Movimiento físico**:
-  - Basado en las entradas de teclado o gamepad.
-  - La velocidad del movimiento es ajustable mediante un parámetro público.
-
-- **Compatibilidad con Unity Input System**:
-  - Usa el sistema de entrada moderno de Unity (`UnityEngine.InputSystem`).
-
-- **Física realista**:
-  - El movimiento se gestiona con `Rigidbody` y fuerzas físicas para mayor realismo.
-
-## Requisitos
-
-- **Motor de juego**: Unity 2020.3 o superior.
-- **Componente necesario**:
-  - Un objeto con un `Rigidbody` adjunto.
-  - Configuración del nuevo sistema de entrada de Unity (Input System).
-
-## Cómo funciona
-
-### Métodos principales
-
-1. **`Start()`**:
-   - Obtiene y almacena el componente `Rigidbody` del jugador para aplicarle fuerzas más adelante.
-
-2. **`OnMove(InputValue movementValue)`**:
-   - Este método captura las entradas de movimiento en los ejes X e Y (por ejemplo, de un joystick o las teclas WASD) y las almacena en las variables `movementX` y `movementY`.
-
-3. **`FixedUpdate()`**:
-   - Calcula un vector de movimiento 3D usando las entradas X e Y.
-   - Aplica una fuerza al `Rigidbody` del jugador usando este vector y el valor de velocidad (`speed`).
-
-### Variables configurables
-
-- **`speed`**: Controla la velocidad a la que se mueve el jugador. Puedes modificar este valor en el editor de Unity.
-
-### Física y movimiento
-El movimiento es gestionado mediante el método `AddForce`, lo que garantiza un comportamiento físico suave y permite interacciones con otros objetos físicos en la escena.
+El script `CameraController.cs` maneja la lógica de la cámara en el juego, permitiendo alternar entre una vista en tercera persona y una en primera persona.
 
 ---
 
-## Cómo usarlo
-
-1. **Preparar el jugador**:
-   - Añade un objeto 3D (como una esfera o un cubo) a la escena.
-   - Asegúrate de que el objeto tiene un componente `Rigidbody` adjunto.
-
-2. **Añadir el script**:
-   - Asocia el script `PlayerController` al objeto del jugador.
-
-3. **Configurar el sistema de entrada**:
-   - Configura un esquema de entrada compatible con el sistema Input System.
-   - Asegúrate de que las acciones de movimiento están asignadas correctamente (por ejemplo, `Horizontal` y `Vertical`).
-
-4. **Personalizar la velocidad**:
-   - Ajusta el valor de `speed` en el inspector de Unity según sea necesario.
-
-5. **Ejecutar el juego**:
-   - Controla el jugador con las teclas WASD, un joystick o cualquier dispositivo configurado en el Input System.
+### **1. Vista en Tercera Persona**:
+- La cámara sigue al jugador manteniendo una distancia y un desplazamiento (`offset`) calculados al inicio.
+- Se mantiene fija mirando al jugador para asegurar una vista clara del personaje.
+- Al cambiar a tercera persona (`KeyCode.Alpha1`), la cámara regresa a su posición y rotación inicial.
 
 ---
 
-## Código del script 
-
-El script completo está disponible en el archivo `PlayerController.cs`.
-
-
-## Tercer Script: Mouselook
-
-Este script implementa el control de rotación de la cámara en Unity utilizando las entradas del ratón. Permite al jugador mirar alrededor en un entorno 3D al mover el ratón, con restricciones para evitar rotaciones no naturales.
-
-## Características
-
-- **Control de cámara basado en ratón**:
-  - Movimiento horizontal (eje X del ratón): Rota el cuerpo del jugador.
-  - Movimiento vertical (eje Y del ratón): Controla la inclinación de la cámara.
-
-- **Limitación de la vista vertical**:
-  - La rotación en el eje X está limitada para evitar que el jugador gire completamente hacia atrás.
-
-- **Cursor bloqueado**:
-  - El cursor se oculta y se fija al centro de la pantalla para una experiencia de control inmersiva.
-
-## Requisitos
-
-- **Motor de juego**: Unity 2020.3 o superior.
-- **Componente necesario**:
-  - Una cámara principal que tenga este script adjunto.
-  - Un objeto jugador con un `Transform` asignado como referencia para la rotación horizontal.
-
-## Cómo funciona
-
-### Métodos principales
-
-1. **`Start()`**:
-   - Configura el cursor para que esté bloqueado en el centro de la pantalla y no sea visible.
-
-2. **`Update()`**:
-   - Captura los movimientos del ratón en los ejes X e Y, ajustados por un parámetro de sensibilidad y el tiempo entre fotogramas (`Time.deltaTime`).
-   - **Movimiento vertical**:
-     - Acumula la rotación en el eje X.
-     - Limita el ángulo de inclinación vertical entre -90° y 90° con `Mathf.Clamp`.
-     - Aplica la rotación al componente `Transform` de la cámara.
-   - **Movimiento horizontal**:
-     - Rota el cuerpo del jugador (`playerBody`) en el eje Y para simular el giro horizontal.
-
-### Variables configurables
-
-- **`Sensibilidad`**:
-  - Controla la rapidez de la rotación al mover el ratón.
-  - Se puede ajustar en el inspector de Unity.
-
-- **`playerBody`**:
-  - Referencia al objeto que representa el cuerpo del jugador, utilizado para aplicar la rotación horizontal.
-
-- **`xRotacion`**:
-  - Almacena la rotación acumulada en el eje X para mantener el seguimiento de la inclinación vertical.
-
-## Cómo usarlo
-
-1. **Añadir el script**:
-   - Asocia este script a la cámara principal de la escena.
-
-2. **Configurar referencias**:
-   - Arrastra el objeto del jugador al campo `playerBody` en el inspector de Unity.
-
-3. **Ajustar sensibilidad**:
-   - Modifica el valor de `Sensibilidad` en el inspector para un control más preciso o rápido según sea necesario.
-
-4. **Ejecutar el juego**:
-   - Mueve el ratón para controlar la cámara y la orientación del jugador.
-   - Observa cómo la vista vertical está limitada y el cuerpo del jugador rota de manera horizontal.
+### **2. Vista en Primera Persona**:
+- La cámara se coloca sobre el jugador, a la altura definida por `heightOffset`, simulando la visión desde sus ojos.
+- La rotación de la cámara responde a la entrada del ratón (`mouseX` y `mouseY`), permitiendo mirar en todas las direcciones.
+- El jugador rota en el eje Y junto con la cámara.
+- Se activa al presionar `KeyCode.Alpha2` y bloquea el cursor para una experiencia más inmersiva.
 
 ---
 
-## Código del script
+### **3. Movimiento en Primera Persona**:
+- Utiliza `Input.GetAxis("Horizontal")` y `Input.GetAxis("Vertical")` para moverse en función de la dirección de la cámara.
+- Se normalizan los vectores de movimiento para evitar cambios de altura.
+- La velocidad de movimiento es controlada por `movementSpeed` y aplicada al `Rigidbody` del jugador.
 
-El script completo está disponible en el archivo `Mouselook.cs`.
+---
 
-¡Gracias por usar este controlador de cámara! 🎮
+### **4. Alternancia entre Modos**:
+- `KeyCode.Alpha1`: Cambia a tercera persona, desbloqueando el cursor.
+- `KeyCode.Alpha2`: Cambia a primera persona, bloqueando el cursor.
+
+El script permite una transición fluida entre los modos y un control intuitivo del personaje en ambas vistas.
+
+### `EnemyMovement.cs`
+
+El script `EnemyMovement.cs` maneja el movimiento de los enemigos utilizando `NavMeshAgent`, permitiendo que persigan al jugador de manera automática.
+
+---
+
+### **1. Dependencias y Componentes**:
+- Usa `NavMeshAgent` para el movimiento en un `NavMesh`.
+- Requiere un `Transform` del jugador para establecer el destino.
+
+---
+
+### **2. Inicialización**:
+- En `Start()`, obtiene la referencia del componente `NavMeshAgent`.
+
+---
+
+### **3. Lógica de Movimiento**:
+- En `Update()`, verifica si el jugador no es `null`.
+- Si el jugador existe, actualiza la posición del `NavMeshAgent` para que lo persiga.
+
+---
+
+### `Mouselook.cs`
+
+El script `Mouselook.cs` maneja la rotación de la cámara en función del movimiento del mouse, permitiendo al jugador mirar alrededor en primera persona.
+
+---
+
+### **1. Funcionalidad Principal**:
+- Controla la rotación de la cámara según el movimiento del mouse.
+- Limita la rotación en el eje X para evitar giros de 360°.
+- Rota el cuerpo del jugador en el eje Y para simular el giro horizontal.
+
+---
+
+### **2. Parámetros y Componentes**:
+- `Sensibilidad`: Ajusta la velocidad de rotación del mouse.
+- `playerBody`: Referencia al cuerpo del jugador para aplicar rotación horizontal.
+- `xRotacion`: Almacena la rotación acumulada en el eje X para limitar la vista vertical.
+
+---
+
+### **3. Inicialización (`Start()`)**:
+- Bloquea y oculta el cursor para mejorar la inmersión en el juego.
+
+---
+
+### **4. Lógica de Rotación (`Update()`)**:
+- Obtiene la entrada del mouse en los ejes X e Y y ajusta la sensibilidad.
+- Modifica `xRotacion` y la restringe dentro del rango `-90° a 90°`.
+- Aplica la rotación vertical a la cámara y la horizontal al cuerpo del jugador.
+- Imprime la rotación en el eje X para facilitar la depuración.
+
+---
+
+### `PlayerController.cs`
+
+El script `PlayerController.cs` gestiona el movimiento del jugador, la detección de colisiones, la recolección de objetos y la interacción con la física en Unity.
+
+---
+
+### **1. Funcionalidad Principal**:
+- Movimiento del jugador basado en la entrada del usuario.
+- Detección de colisiones con enemigos, pickups y el suelo.
+- Implementación del salto y su animación.
+- Gestión de recolección de objetos y actualización del contador.
+- Reinicio del jugador en caso de perder.
+
+---
+
+### **2. Parámetros y Componentes**:
+- `rb`: Componente Rigidbody del jugador para aplicar física.
+- `speed`: Velocidad de movimiento.
+- `winTextObject`: Texto que indica la victoria o derrota.
+- `countText`: Contador de pickups recogidos.
+- `Pared_Invisible_0`: Objeto que se desactiva al recoger ciertos pickups.
+- `jumpForce`: Fuerza del salto.
+- `canJump`: Indica si el jugador puede saltar.
+- `allPickups`: Lista de pickups en la escena.
+- `allEnemies`: Lista de enemigos en la escena.
+- `animation`: Controlador de animaciones.
+
+---
+
+### **3. Movimiento (`OnMove()`)**:
+- Detecta la entrada del usuario y almacena la dirección del movimiento.
+- Controla el estado de la animación según si el jugador se está moviendo.
+
+---
+
+### **4. Física (`FixedUpdate()`)**:
+- Aplica fuerzas al Rigidbody del jugador para moverse.
+
+---
+
+### **5. Detección de Colisiones**:
+- `OnCollisionEnter()`: Maneja colisiones con enemigos y el suelo.
+- `OnTriggerEnter()`: Detecta pickups y habilita efectos como el salto.
+- `OnCollisionStay()` y `OnCollisionExit()`: Gestiona el estado de contacto con el suelo.
+
+---
+
+### **6. Salto (`Jump()`)**:
+- Aplica una fuerza vertical al jugador.
+- Actualiza las animaciones correspondientes.
+
+---
+
+### **7. Reinicio del Jugador (`Respawn()`)**:
+- Reinicia la posición y los valores del jugador al perder.
+- Reactiva los pickups en la escena.
+
+---
+
+### **8. Animaciones (`UpdateAnimator()`)**:
+- Controla la animación de caminar y el estado del salto.
+
+---
+
+### `RampTrigger.cs`
+
+El script `RampTrigger.cs` gestiona la interacción entre la pelota y una rampa en el juego. Cuando la pelota entra en el área de colisión (trigger), se le aplica una fuerza para impulsarla en una dirección específica.
+
+---
+
+### Funcionalidad
+
+1. Detección de colisión
+
+   - El script utiliza `OnTriggerEnter(Collider other)` para detectar si un objeto entra en el trigger de la rampa.
+   - Comprueba si el objeto tiene la etiqueta `Pelota` antes de aplicar la fuerza.
+
+2. **Aplicación de fuerza**
+
+   - Si el objeto tiene un `Rigidbody`, se le aplica una fuerza de impulso (`impulseForce`).
+   - La fuerza puede aplicarse en relación al sistema de coordenadas de la rampa, si la opción `aplicarFuerzaRelativaRampa` está activada.
+
+3. **Depuración y Mensajes**
+
+   - Si el objeto no tiene un `Rigidbody`, se muestra un mensaje de advertencia en la consola.
+   - También se registran mensajes en consola si un objeto sin la etiqueta `Pelota` activa el trigger.
+
+---
+
+### Variables Principales
+
+- `impulseForce` (Vector3): Define la dirección y magnitud del impulso aplicado a la pelota.
+- `aplicarFuerzaRelativaRampa` (bool): Determina si la fuerza debe ajustarse al sistema de coordenadas de la rampa.
+
+---
+
+### Métodos
+
+#### `OnTriggerEnter(Collider other)`
+
+- Comprueba si el objeto que entra en el trigger tiene la etiqueta `Pelota`.
+- Obtiene su `Rigidbody` y aplica una fuerza de impulso.
+- Si `aplicarFuerzaRelativaRampa` es `true`, la fuerza se ajusta a la orientación de la rampa.
+- Muestra mensajes en consola si el objeto no tiene `Rigidbody` o no es una pelota.
+
+### `Rotator.cs`
+
+El script `Rotator.cs` rota un objeto de forma continua en los ejes X, Y y Z del espacio, ajustando la rotación por la tasa de frames para una rotación suave y consistente.
+
+---
+
+### Funcionalidad
+
+#### **Rotación continua**
+- El script rota el objeto en cada actualización del frame utilizando `transform.Rotate()`.
+- La rotación se aplica en los ejes X, Y y Z con valores constantes (15, 30, 45), ajustados por `Time.deltaTime` para asegurar que la rotación sea independiente de la tasa de frames.
+
+#### **Ajuste de rotación según frames**
+- `Time.deltaTime` asegura que la rotación sea suave y consistente en cualquier tasa de frames, multiplicando las velocidades de rotación por el tiempo que ha pasado entre frames.
+
+---
+
+### Métodos
+
+#### `Update()`
+- Se llama una vez por frame y realiza la rotación continua del objeto en los ejes X, Y y Z.
+- La rotación se ajusta según el valor de `Time.deltaTime` para garantizar un movimiento uniforme, sin importar los FPS del juego.
+
+
+
+
+</details>
